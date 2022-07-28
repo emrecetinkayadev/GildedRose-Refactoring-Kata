@@ -11,7 +11,6 @@ const itemList = [
   new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
   new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
   new Item("Backstage passes to a TAFKAL80ETC concert", 5, 3),
-  // this conjured item does not work properly yet
   new Item("Conjured Mana Cake", 3, 6)];
 
 describe('Gilded Rose', () => {
@@ -61,6 +60,11 @@ describe('Gilded Rose', () => {
   it('Backstage passes to a TAFKAL80ETC concert 4', () => {
     expect(items[8].sellIn, 'Sell Value').equal(4);
     expect(items[8].quality, 'Quality').equal(6);
+  });
+
+  it('Conjured Mana Cake', () => {
+    expect(items[9].sellIn, 'Sell Value').equal(2);
+    expect(items[9].quality, 'Quality').equal(4);
   });
 
 });

@@ -70,31 +70,46 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      switch (this.items[i].name) {
+      let itemName = this.items[i].name
+
+      if (itemName.startsWith('Conjured')) {
+        itemName = 'Conjured'
+      }
+
+      switch (itemName) {
         case 'Aged Brie':
-          this.AgedBrieCheck(this.items[i])
+          this.AgedBrieUpdate(this.items[i])
           break
         case 'Sulfuras, Hand of Ragnaros':
-          this.SulfurasCheck(this.items[i])
+          this.SulfurasUpdate(this.items[i])
           break
         case 'Backstage passes to a TAFKAL80ETC concert':
-          this.TAFKAL80ETCCheck(this.items[i])
+          this.TAFKAL80ETCUpdate(this.items[i])
+          break
+        case 'Conjured':
+          this.ConjuredUpdate(this.items[i])
           break
         default:
-          this.OtherItemsCheck(this.items[i])
+          this.NormalItemsUpdate(this.items[i])
       }
     }
     return this.items;
   }
 
-  SulfurasCheck(item){
+  ConjuredUpdate(item){
+    if (item.quality > 0) {
+      item.quality = item.quality - 2
+    }
+    item.sellIn = item.sellIn - 1;
+  }
+
+  SulfurasUpdate(item){
     if (item.quality < 50) {
       item.quality = item.quality + 1
     }
   }
 
-
-  AgedBrieCheck(item){
+  AgedBrieUpdate(item){
     if (item.quality < 50) {
       item.quality = item.quality + 1
     }
@@ -107,10 +122,11 @@ export class GildedRose {
     }
   }
 
-  TAFKAL80ETCCheck(item){
+  TAFKAL80ETCUpdate(item){
     if (item.quality < 50) {
       item.quality = item.quality + 1
     }
+
     if (item.quality < 50) {
       if (item.sellIn < 11) {     
         item.quality = item.quality + 1;          
@@ -119,6 +135,7 @@ export class GildedRose {
         item.quality = item.quality + 1;             
       }
     }
+
     item.sellIn = item.sellIn - 1;
 
     if (item.sellIn < 0) {
@@ -126,7 +143,7 @@ export class GildedRose {
     }
   }
 
-  OtherItemsCheck(item){
+  NormalItemsUpdate(item){
     if (item.quality > 0) {
       item.quality = item.quality - 1     
     }
