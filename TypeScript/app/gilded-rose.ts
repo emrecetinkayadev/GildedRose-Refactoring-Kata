@@ -66,9 +66,6 @@ export class GildedRose {
   AgedBrieUpdate(item){
     this.QualityUpdate(item, increment)
     this.SellUpdate(item, decrement)
-    if (item.sellIn < 0) {
-      this.QualityUpdate(item, increment)    
-    }
   }
 
   TAFKAL80ETCUpdate(item){
@@ -80,6 +77,7 @@ export class GildedRose {
       this.QualityUpdate(item, increment)
     }
     this.SellUpdate(item, decrement)
+
     if (item.sellIn < 0) {
       this.QualityUpdate(item,-item.quality)
     }
@@ -88,13 +86,13 @@ export class GildedRose {
   NormalItemsUpdate(item){
     this.QualityUpdate(item, decrement)   
     this.SellUpdate(item, decrement)
-
-    if (item.sellIn < 0) {
-      this.QualityUpdate(item, decrement)
-    }
   }
 
   QualityUpdate(item, value){
+    if (item.sellIn < 0){
+      value *= 2
+    }
+
     if (item.quality <= 50 && item.quality >= 0) {
       item.quality = item.quality + value
     }
