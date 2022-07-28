@@ -10,6 +10,9 @@ export class Item {
   }
 }
 
+/* 
+* Constant variables for string values.
+*/
 const SULFURAS = 'Sulfuras, Hand of Ragnaros'
 const AGEDBRIE = 'Aged Brie'
 const TAFKAL80ETC = 'Backstage passes to a TAFKAL80ETC concert'
@@ -18,6 +21,9 @@ const increment = 1
 const decrement = -1
 const doubleDecrement = -2
 
+/* 
+* Gilded Rose Class
+*/
 export class GildedRose {
   items: Array<Item>;
 
@@ -25,6 +31,11 @@ export class GildedRose {
     this.items = items;
   }
 
+  /* 
+  * Update quality function.
+  * Do not get any value.
+  * Return items.
+  */
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       let item = this.items[i]
@@ -54,20 +65,40 @@ export class GildedRose {
     return this.items;
   }
 
+  /* 
+  * Update conjured items.
+  * Param: item object.
+  * Return nothing.
+  */
   ConjuredUpdate(item){
     this.QualityUpdate(item, doubleDecrement)  
     this.SellUpdate(item, decrement)
   }
 
+  /* 
+  * Update sulfuras legendary item.
+  * Param: item object.
+  * Return nothing.
+  */
   SulfurasUpdate(item){
     this.QualityUpdate(item, increment)
   }
 
+  /* 
+  * Update Aged Brie item.
+  * Param: item object.
+  * Return nothing.
+  */
   AgedBrieUpdate(item){
     this.QualityUpdate(item, increment)
     this.SellUpdate(item, decrement)
   }
 
+  /* 
+  * Update TAFKAL80ETC item.
+  * Param: item object.
+  * Return nothing.
+  */
   TAFKAL80ETCUpdate(item){
     this.QualityUpdate(item, increment)
     if (item.sellIn < 11) {     
@@ -83,11 +114,22 @@ export class GildedRose {
     }
   }
 
+  /* 
+  * Update normal items.
+  * Param: item object.
+  * Return nothing.
+  */
   NormalItemsUpdate(item){
     this.QualityUpdate(item, decrement)   
     this.SellUpdate(item, decrement)
   }
 
+  /*
+  * Updates quality, if 'sell in' value goes under 0, Quality degrades twice as fast.
+  * Param: item object.
+  * Param2: quality value
+  * Return nothing.
+  */
   QualityUpdate(item, value){
     if (item.sellIn < 0){
       value *= 2
@@ -106,60 +148,15 @@ export class GildedRose {
     }
   }
 
+  /*
+  * Sell in value update.
+  * Param: item object.
+  * Param2: quality value
+  * Return nothing.
+  */
   SellUpdate(item, value){
     item.sellIn = item.sellIn + value
   }
-
-/*   updateQualityOld() {
-    for (let i = 0; i < this.items.length; i++) {
-      let item = this.items[i];
-
-      //default
-      if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert' && item.name != 'Sulfuras, Hand of Ragnaros') {
-        if (item.quality > 0) {
-          item.quality = item.quality - 1     
-        }
-      } else {
-        if (item.quality < 50) {
-          item.quality = item.quality + 1
-        }
-        if (item.quality < 50) {
-          if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (item.sellIn < 11) {     
-              item.quality = item.quality + 1;          
-            }
-            if (item.sellIn < 6) {
-              item.quality = item.quality + 1;             
-            }
-          }
-        }
-      }
-
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
-        item.sellIn = item.sellIn - 1;
-      }
-
-      if (item.sellIn < 0) {
-        if (item.name != 'Aged Brie') {
-          if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (item.quality > 0) {
-              if (item.name != 'Sulfuras, Hand of Ragnaros') {
-                item.quality = item.quality - 1
-              }
-            }
-          } else {
-            item.quality = item.quality - item.quality
-          }
-        } else {
-          if (item.quality < 50) {
-            item.quality = item.quality + 1
-          }
-        }
-      }
-    }
-
-    return this.items;
-  } */
 }
 
 
