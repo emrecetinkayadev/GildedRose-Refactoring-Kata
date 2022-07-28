@@ -17,58 +17,14 @@ export class GildedRose {
     this.items = items;
   }
 
-  updateQualityOld() {
-    for (let i = 0; i < this.items.length; i++) {
-      let item = this.items[i];
-
-      //default
-      if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert' && item.name != 'Sulfuras, Hand of Ragnaros') {
-        if (item.quality > 0) {
-          item.quality = item.quality - 1     
-        }
-      } else {
-        if (item.quality < 50) {
-          item.quality = item.quality + 1
-        }
-        if (item.quality < 50) {
-          if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (item.sellIn < 11) {     
-              item.quality = item.quality + 1;          
-            }
-            if (item.sellIn < 6) {
-              item.quality = item.quality + 1;             
-            }
-          }
-        }
-      }
-
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
-        item.sellIn = item.sellIn - 1;
-      }
-
-      if (item.sellIn < 0) {
-        if (item.name != 'Aged Brie') {
-          if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (item.quality > 0) {
-              if (item.name != 'Sulfuras, Hand of Ragnaros') {
-                item.quality = item.quality - 1
-              }
-            }
-          } else {
-            item.quality = item.quality - item.quality
-          }
-        } else {
-          if (item.quality < 50) {
-            item.quality = item.quality + 1
-          }
-        }
-      }
-    }
-
-    return this.items;
-  }
+  
 
   updateQuality() {
+    const SULFURAS = 'Sulfuras, Hand of Ragnaros'
+    const AGEDBRIE = 'Aged Brie'
+    const TAFKAL80ETC = 'Backstage passes to a TAFKAL80ETC concert'
+    const CONJURED = 'Conjured'
+
     for (let i = 0; i < this.items.length; i++) {
       let itemName = this.items[i].name
 
@@ -77,16 +33,16 @@ export class GildedRose {
       }
 
       switch (itemName) {
-        case 'Aged Brie':
+        case AGEDBRIE:
           this.AgedBrieUpdate(this.items[i])
           break
-        case 'Sulfuras, Hand of Ragnaros':
+        case SULFURAS:
           this.SulfurasUpdate(this.items[i])
           break
-        case 'Backstage passes to a TAFKAL80ETC concert':
+        case TAFKAL80ETC:
           this.TAFKAL80ETCUpdate(this.items[i])
           break
-        case 'Conjured':
+        case CONJURED:
           this.ConjuredUpdate(this.items[i])
           break
         default:
@@ -154,6 +110,57 @@ export class GildedRose {
       item.quality = item.quality - 1    
     }
   }
+
+/*   updateQualityOld() {
+    for (let i = 0; i < this.items.length; i++) {
+      let item = this.items[i];
+
+      //default
+      if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert' && item.name != 'Sulfuras, Hand of Ragnaros') {
+        if (item.quality > 0) {
+          item.quality = item.quality - 1     
+        }
+      } else {
+        if (item.quality < 50) {
+          item.quality = item.quality + 1
+        }
+        if (item.quality < 50) {
+          if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+            if (item.sellIn < 11) {     
+              item.quality = item.quality + 1;          
+            }
+            if (item.sellIn < 6) {
+              item.quality = item.quality + 1;             
+            }
+          }
+        }
+      }
+
+      if (item.name != 'Sulfuras, Hand of Ragnaros') {
+        item.sellIn = item.sellIn - 1;
+      }
+
+      if (item.sellIn < 0) {
+        if (item.name != 'Aged Brie') {
+          if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+            if (item.quality > 0) {
+              if (item.name != 'Sulfuras, Hand of Ragnaros') {
+                item.quality = item.quality - 1
+              }
+            }
+          } else {
+            item.quality = item.quality - item.quality
+          }
+        } else {
+          if (item.quality < 50) {
+            item.quality = item.quality + 1
+          }
+        }
+      }
+    }
+
+    return this.items;
+  } */
 }
 
 
