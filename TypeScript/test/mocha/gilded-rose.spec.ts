@@ -24,12 +24,37 @@ describe('Gilded Rose', () => {
 
   it('Aged Brie', () => {
     expect(items[1].sellIn, 'Sell Value').equal(1);
-    expect(items[1].quality, 'Quality').equal(-1);
+    expect(items[1].quality, 'Quality').equal(1);
   });
 
   it('Elixir of the Mongoose', () => {
     expect(items[2].sellIn, 'Sell Value').equal(4);
     expect(items[2].quality, 'Quality').equal(6);
+  });
+
+  it('Sulfuras, Hand of Ragnaros 1', () => {
+    expect(items[3].sellIn, 'Sell Value').equal(0);
+    expect(items[3].quality, 'Quality').equal(80);
+  });
+
+  it('Sulfuras, Hand of Ragnaros 2', () => {
+    expect(items[4].sellIn, 'Sell Value').equal(-1);
+    expect(items[4].quality, 'Quality').equal(80);
+  });
+
+  it('Backstage passes to a TAFKAL80ETC concert 1', () => {
+    expect(items[5].sellIn, 'Sell Value').equal(14);
+    expect(items[5].quality, 'Quality').equal(21);
+  });
+
+  it('Backstage passes to a TAFKAL80ETC concert 2', () => {
+    expect(items[6].sellIn, 'Sell Value').equal(9);
+    expect(items[6].quality, 'Quality').equal(50);
+  });
+
+  it('Backstage passes to a TAFKAL80ETC concert 3', () => {
+    expect(items[7].sellIn, 'Sell Value').equal(4);
+    expect(items[7].quality, 'Quality').equal(50);
   });
 
 });
