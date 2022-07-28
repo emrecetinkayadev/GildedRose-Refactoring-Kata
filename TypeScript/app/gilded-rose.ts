@@ -10,6 +10,14 @@ export class Item {
   }
 }
 
+const SULFURAS = 'Sulfuras, Hand of Ragnaros'
+const AGEDBRIE = 'Aged Brie'
+const TAFKAL80ETC = 'Backstage passes to a TAFKAL80ETC concert'
+const CONJURED = 'Conjured'
+const increment = 1
+const decrement = -1
+const doubleDecrement = -2
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -17,98 +25,91 @@ export class GildedRose {
     this.items = items;
   }
 
-  
-
   updateQuality() {
-    const SULFURAS = 'Sulfuras, Hand of Ragnaros'
-    const AGEDBRIE = 'Aged Brie'
-    const TAFKAL80ETC = 'Backstage passes to a TAFKAL80ETC concert'
-    const CONJURED = 'Conjured'
-
     for (let i = 0; i < this.items.length; i++) {
-      let itemName = this.items[i].name
+      let item = this.items[i]
 
-      if (itemName.startsWith('Conjured')) {
-        itemName = 'Conjured'
+      // Checks any item starts with 'Conjured'
+      if (item.name.startsWith('Conjured')) {
+        item.name = 'Conjured'
       }
 
-      switch (itemName) {
+      switch (item.name) {
         case AGEDBRIE:
-          this.AgedBrieUpdate(this.items[i])
+          this.AgedBrieUpdate(item)
           break
         case SULFURAS:
-          this.SulfurasUpdate(this.items[i])
+          this.SulfurasUpdate(item)
           break
         case TAFKAL80ETC:
-          this.TAFKAL80ETCUpdate(this.items[i])
+          this.TAFKAL80ETCUpdate(item)
           break
         case CONJURED:
-          this.ConjuredUpdate(this.items[i])
+          this.ConjuredUpdate(item)
           break
         default:
-          this.NormalItemsUpdate(this.items[i])
+          this.NormalItemsUpdate(item)
       }
     }
     return this.items;
   }
 
   ConjuredUpdate(item){
-    if (item.quality > 0) {
-      item.quality = item.quality - 2
-    }
-    item.sellIn = item.sellIn - 1;
+    this.QualityUpdate(item, doubleDecrement)  
+    this.SellUpdate(item, decrement)
   }
 
   SulfurasUpdate(item){
-    if (item.quality < 50) {
-      item.quality = item.quality + 1
-    }
+    this.QualityUpdate(item, increment)
   }
 
   AgedBrieUpdate(item){
-    if (item.quality < 50) {
-      item.quality = item.quality + 1
-    }
-    item.sellIn = item.sellIn - 1;
-
+    this.QualityUpdate(item, increment)
+    this.SellUpdate(item, decrement)
     if (item.sellIn < 0) {
-      if (item.quality < 50) {
-        item.quality = item.quality + 1
-      }
+      this.QualityUpdate(item, increment)    
     }
   }
 
   TAFKAL80ETCUpdate(item){
-    if (item.quality < 50) {
-      item.quality = item.quality + 1
+    this.QualityUpdate(item, increment)
+    if (item.sellIn < 11) {     
+      this.QualityUpdate(item, increment)
     }
-
-    if (item.quality < 50) {
-      if (item.sellIn < 11) {     
-        item.quality = item.quality + 1;          
-      }
-      if (item.sellIn < 6) {
-        item.quality = item.quality + 1;             
-      }
+    if (item.sellIn < 6) {
+      this.QualityUpdate(item, increment)
     }
-
-    item.sellIn = item.sellIn - 1;
-
+    this.SellUpdate(item, decrement)
     if (item.sellIn < 0) {
-      item.quality = item.quality - item.quality
+      this.QualityUpdate(item,-item.quality)
     }
   }
 
   NormalItemsUpdate(item){
-    if (item.quality > 0) {
-      item.quality = item.quality - 1     
+    this.QualityUpdate(item, decrement)   
+    this.SellUpdate(item, decrement)
+
+    if (item.sellIn < 0) {
+      this.QualityUpdate(item, decrement)
+    }
+  }
+
+  QualityUpdate(item, value){
+    if (item.quality <= 50 && item.quality >= 0) {
+      item.quality = item.quality + value
     }
 
-    item.sellIn = item.sellIn - 1;
-
-    if (item.sellIn < 0 && item.quality > 0) {
-      item.quality = item.quality - 1    
+    // Check functions if barriers break in case
+    if (item.quality > 50 && item.name != SULFURAS){
+      item.quality = 50
     }
+    if (item.quality < 0){
+      item.quality = 0
+    }
+  }
+
+  SellUpdate(item, value){
+    item.sellIn = item.sellIn + value
   }
 
 /*   updateQualityOld() {
