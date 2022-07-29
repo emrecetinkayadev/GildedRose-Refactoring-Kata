@@ -39,13 +39,14 @@ export class GildedRose {
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       let item = this.items[i]
+      let itemName = item.name
 
       // Checks any item starts with 'Conjured'
       if (item.name.startsWith('Conjured')) {
-        item.name = 'Conjured'
+        itemName = 'Conjured'
       }
 
-      switch (item.name) {
+      switch (itemName) {
         case AGEDBRIE:
           this.AgedBrieUpdate(item)
           break
